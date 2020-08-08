@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env next dev -p ${PORT-1234}",
     "build": "next build",
     "export": "next export",
-    "start": "next start"
+    "start": "next start -p ${PORT-80}"
   },
   "dependencies": {
     "antd": "^4.5.2",
