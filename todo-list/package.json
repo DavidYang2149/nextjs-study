@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export"
   },
   "dependencies": {
+    "immer": "^7.0.7",
     "lodash": "^4.17.19",
     "next": "9.5.1",
     "react": "16.13.1",
