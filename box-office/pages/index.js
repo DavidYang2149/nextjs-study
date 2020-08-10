@@ -3,6 +3,9 @@ import Head from "next/head";
 import axios from "axios";
 import Error from "next/error";
 import Link from "next/link";
+import { DatePicker } from "antd";
+import moment from "moment";
+import Router from "next/router";
 
 function Home(props) {
   if (props.error) {
@@ -19,8 +22,16 @@ function Home(props) {
         <title>Box Office</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>박스 오피스</h1>
-      <p>2020년 08월 07일</p>
+      <h1>영화 박스 오피스</h1>
+      <div>
+        <DatePicker
+          defaultValue={moment(props.targetDt, "YYYYMMDD")}
+          dateFormat={"YYYYMMDD"}
+          onChange={(date) =>
+            Router.push("/?targetDt=" + date.format("YYYYMMDD"))
+          }
+        />
+      </div>
       {props.data.boxOfficeResult.dailyBoxOfficeList.map((item) => (
         <div key={item.movieCd}>
           [{item.rank}] &nbsp;
@@ -36,17 +47,23 @@ function Home(props) {
 }
 
 Home.getInitialProps = async function (context) {
+  const targetDt =
+    context.query.targetDt || moment().subtract(1, "day").format("YYYYMMDD");
+  const keyCode = process.env.KEY;
+
   let url =
     "https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json";
-  url += "?key=" + process.env.KEY;
+  url += "?key=" + keyCode;
+  //url += "?key=" + process.env.KEY;
   //url += "?key=";
-  url += "&targetDt=20200807";
+  url += "&targetDt=" + targetDt;
 
   // Promise -> async/await
   try {
     const response = await axios.get(url);
     console.log(response.data);
     return {
+      targetDt,
       data: response.data,
     };
   } catch (error) {
