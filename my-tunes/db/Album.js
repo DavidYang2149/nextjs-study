@@ -4,6 +4,7 @@ const knex = require("knex")({
   connection: {
     filename: "./db/my-tunes.db",
   },
+  useNullAsDefault: false,
 });
 const bookshelf = require("bookshelf")(knex);
 
