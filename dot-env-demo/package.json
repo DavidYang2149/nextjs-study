@@ -10,6 +10,7 @@
   "dependencies": {
     "@zeit/next-less": "^1.0.1",
     "antd": "^4.6.0",
+    "comma-separated-values": "^3.6.4",
     "dotenv-webpack": "^2.0.0",
     "less": "^3.12.2",
     "next": "9.5.2",
