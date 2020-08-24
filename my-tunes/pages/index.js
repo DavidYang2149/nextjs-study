@@ -34,7 +34,7 @@ function Home(props) {
               return false;
             }
             axios
-              .delete("http://127.0.0.1:3000/api/albums/" + value)
+              .delete(process.env.API_HOST + "/api/albums/" + value)
               .then((response) => {
                 load();
               })
@@ -51,7 +51,7 @@ function Home(props) {
   // 관리 Props, state
   const [albums, setAlbums] = React.useState(props.albums);
   const load = async () => {
-    const albums = await axios.get("http://127.0.0.1:3000/api/albums");
+    const albums = await axios.get(process.env.API_HOST + "/api/albums");
     setAlbums(albums.data);
   };
 
@@ -62,7 +62,7 @@ function Home(props) {
       <Form
         onFinish={(values) => {
           axios
-            .post("http://127.0.0.1:3000/api/albums", values)
+            .post(process.env.API_HOST + "/api/albums", values)
             .then((response) => {
               // response.data -> { id: n, artist: '', title: '' }
               /*
@@ -107,7 +107,7 @@ function Home(props) {
 }
 
 Home.getInitialProps = async () => {
-  const albums = await axios.get("http://127.0.0.1:3000/api/albums");
+  const albums = await axios.get(process.env.API_HOST + "/api/albums");
   return {
     albums: albums.data,
   };
