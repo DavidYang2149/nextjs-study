@@ -1,65 +1,75 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from "react";
+import { Button, Form, Table, Input } from "antd";
+import axios from "axios";
+import Router from "next/router";
 
-export default function Home() {
+const columns = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "아티스트",
+    dataIndex: "artist",
+    key: "artist",
+  },
+  {
+    title: "앨범명",
+    dataIndex: "title",
+    key: "title",
+  },
+];
+
+function Home(props) {
+  const [albums, setAlbums] = React.useState(props.albums);
+  const load = async () => {
+    const albums = await axios.get("http://127.0.0.1:3000/api/albums");
+    setAlbums(albums.data);
+  };
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div style={{ padding: 24 }}>
+      <Table dataSource={albums} columns={columns} rowKey={"id"} />
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Form
+        onFinish={(values) => {
+          axios
+            .post("http://127.0.0.1:3000/api/albums", values)
+            .then((response) => {
+              // 기본 페이지 새로고침
+              //Router.reload()
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+              // 리액트를 이용한 state 변경(리로딩 없음)
+              load();
+            })
+            .catch((error) => console.warn(error));
+        }}
+      >
+        <Form.Item
+          name={"artist"}
+          label={"아티스트"}
+          rules={[{ required: true }]}
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+          <Input />
+        </Form.Item>
+        <Form.Item name={"title"} label={"타이틀"} rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item>
+          <Button type={"primary"} htmlType={"submit"}>
+            전송
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
-  )
+  );
 }
+
+Home.getInitialProps = async () => {
+  const albums = await axios.get("http://127.0.0.1:3000/api/albums");
+  return {
+    albums: albums.data,
+  };
+};
+
+export default Home;
