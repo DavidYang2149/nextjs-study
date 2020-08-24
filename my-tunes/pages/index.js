@@ -1,32 +1,60 @@
 import React from "react";
-import { Button, Form, Table, Input } from "antd";
+import { Button, Table, Form, Input } from "antd";
 import axios from "axios";
 import Router from "next/router";
 
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "아티스트",
-    dataIndex: "artist",
-    key: "artist",
-  },
-  {
-    title: "앨범명",
-    dataIndex: "title",
-    key: "title",
-  },
-];
-
 function Home(props) {
+  // Table - Antd 설정
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "아티스트",
+      dataIndex: "artist",
+      key: "artist",
+    },
+    {
+      title: "앨범명",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "삭제",
+      dataIndex: "id",
+      key: "remove",
+      render: (value) => (
+        <Button
+          size={"small"}
+          type={"danger"}
+          onClick={() => {
+            if (!confirm("정말 삭제하시겠습니까?")) {
+              return false;
+            }
+            axios
+              .delete("http://127.0.0.1:3000/api/albums/" + value)
+              .then((response) => {
+                load();
+              })
+              .catch((error) => {
+                console.warn(error);
+              });
+          }}
+        >
+          삭제
+        </Button>
+      ),
+    },
+  ];
+  // 관리 Props, state
   const [albums, setAlbums] = React.useState(props.albums);
   const load = async () => {
     const albums = await axios.get("http://127.0.0.1:3000/api/albums");
     setAlbums(albums.data);
   };
+
   return (
     <div style={{ padding: 24 }}>
       <Table dataSource={albums} columns={columns} rowKey={"id"} />
@@ -36,11 +64,24 @@ function Home(props) {
           axios
             .post("http://127.0.0.1:3000/api/albums", values)
             .then((response) => {
-              // 기본 페이지 새로고침
-              //Router.reload()
+              // response.data -> { id: n, artist: '', title: '' }
+              /*
+              // case 1
+              setAlbums( [
+                response.data,
+                ...albums,
+              ] )
+            */
+              /*
+              // case 2
+              setAlbums( response.data )
+           */
 
-              // 리액트를 이용한 state 변경(리로딩 없음)
+              // 데이터만 다시 로드
               load();
+
+              // 페이지 새로 고침
+              // Router.reload();
             })
             .catch((error) => console.warn(error));
         }}
