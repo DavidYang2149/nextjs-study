@@ -4,7 +4,7 @@ function Second(props) {
   return (
     <div>
       <Link href="/">
-        <a> 첫 페이지로</a>
+        <a>첫 페이지로</a>
       </Link>
     </div>
   );
