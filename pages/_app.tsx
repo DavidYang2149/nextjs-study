@@ -1,7 +1,11 @@
-import '../styles/globals.css'
+// eslint-disable-next-line import/extensions
+import React from 'react';
+import type { AppProps } from 'next/app';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import '../styles/globals.css';
 
-export default MyApp
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  return <Component {...pageProps} />;
+};
+
+export default MyApp;
