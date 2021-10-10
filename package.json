@@ -25,5 +25,17 @@
     "eslint-config-next": "11.1.2",
     "eslint-plugin-react": "^7.26.1",
     "typescript": "^4.4.3"
-  }
+  },
+  "description": "nextjs study",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidYang2149/nextjs-study.git"
+  },
+  "keywords": [],
+  "author": "davidyang2149",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidYang2149/nextjs-study/issues"
+  },
+  "homepage": "https://github.com/DavidYang2149/nextjs-study#readme"
 }
