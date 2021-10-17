@@ -2,7 +2,7 @@
 
 Next.js 구조 연습
 
-기술스택
+### 기술스택
 - react
 - next
 - redux toolkit
