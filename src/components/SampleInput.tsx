@@ -2,13 +2,20 @@ import React from 'react';
 
 export interface Props {
   value: string;
+  onChangeSample: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SampleInput = ({ value }: Props) => {
+const SampleInput = ({ value, onChangeSample }: Props) => {
   return (
     <div>
       <label htmlFor="sample-input">입력</label>
-      <input type="text" id="sample-input" value={value} />
+      <input
+        type="text"
+        id="sample-input"
+        name="sample"
+        value={value}
+        onChange={onChangeSample}
+      />
     </div>
   )
 };
