@@ -17,9 +17,9 @@
       "sourceType": "module"
     },
     "plugins": [
-      "react",
       "@typescript-eslint",
-      "import"
+      "testing-library",
+      "react"
     ],
     "rules": {
       "react/react-in-jsx-scope": "off",
