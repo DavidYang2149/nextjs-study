@@ -21,7 +21,7 @@ const { actions, reducer } = createSlice({
   },
 });
 
-export const getSample = () => async (dispatch: Dispatch<PayloadAction<{ name: string, value: string }>>) => {
+export const getSample = () => (dispatch: Dispatch<PayloadAction<{ name: string, value: string }>>) => {
   dispatch(actions.setSample({ name: 'sample', value: 'result' }));
 };
 
