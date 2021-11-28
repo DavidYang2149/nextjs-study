@@ -5,7 +5,7 @@ const SampleItem = () => {
     <div>
       <p>샘플</p>
     </div>
-  )
+  );
 };
 
 export default SampleItem;
