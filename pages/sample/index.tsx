@@ -5,7 +5,7 @@ import SampleContainer from 'src/containers/SampleContainer';
 const sample = () => {
   return (
     <SampleContainer />
-  )
+  );
 };
 
 export default sample;

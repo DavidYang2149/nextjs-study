@@ -11,7 +11,6 @@ const SampleContainer = () => {
   const { sample } = useSelector((state: RootState) => ({
     sample: state.sample,
   }));
-  const value = sample.sample;
 
   const handleChangeSample = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = (event.target as HTMLInputElement);
@@ -22,11 +21,11 @@ const SampleContainer = () => {
     <>
       <SampleItem />
       <SampleInput
-        value={value}
+        value={sample.sample}
         onChangeSample={handleChangeSample}
       />
     </>
-  )
+  );
 };
 
 export default SampleContainer;

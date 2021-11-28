@@ -17,7 +17,7 @@ const SampleInput = ({ value, onChangeSample }: Props) => {
         onChange={onChangeSample}
       />
     </div>
-  )
+  );
 };
 
 export default SampleInput;
